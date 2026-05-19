@@ -67,7 +67,7 @@ export const metadata: Metadata = {
     siteName: 'Chenliang Tian',
     images: [
       {
-        url: '/images/citations.jpeg',
+        url: '/images/profile.jpeg',
         width: 1200,
         height: 630,
         alt: 'Chenliang Tian',
@@ -78,7 +78,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Chenliang (Momo) Tian - PhD Student in Computer Science',
     description: 'PhD student researching quantum networking.',
-    images: ['/images/citations.jpeg'],
+    images: ['/images/profile.jpeg'],
   },
   robots: {
     index: true,
@@ -114,7 +114,7 @@ export default function RootLayout({
               name: "Chenliang (Momo) Tian",
               alternateName: "Momo Tian",
               url: "https://chenliangtian.github.io",
-              image: "https://chenliangtian.github.io/images/citations.jpeg",
+              image: "https://chenliangtian.github.io/images/profile.jpeg",
               jobTitle: "PhD Student",
               worksFor: {
                 "@type": "Organization",

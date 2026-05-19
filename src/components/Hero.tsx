@@ -35,7 +35,7 @@ export function Hero() {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="mb-8 max-w-xl text-lg font-medium leading-relaxed text-brown/80 dark:text-cream/80 md:text-xl"
             >
-              I am a Ph.D. student in Computer Science & Engineering at <Link href="https://wustl.edu" className="font-bold text-brown underline decoration-brown/30 underline-offset-4 transition-colors hover:decoration-brown dark:text-cream dark:decoration-cream/30 dark:hover:decoration-cream">Washington University in St. Louis</Link>, exploring the space between advanced networking systems and emerging computation models. I am currently interested in <span className="inline-block rounded-lg bg-quantum-accent/20 px-1.5 font-bold text-brown dark:bg-quantum-accent/30 dark:text-cream">quantum networking</span>—how future quantum devices might connect, share entanglement, and collaborate across a network.
+              I am a Ph.D. student in Computer Science & Engineering at <Link href="https://wustl.edu" className="font-bold text-brown underline decoration-brown/30 underline-offset-4 transition-colors hover:decoration-brown dark:text-cream dark:decoration-cream/30 dark:hover:decoration-cream">Washington University in St. Louis</Link>, advised by <Link href="https://www.cse.wustl.edu/~jain/" className="font-bold text-brown underline decoration-brown/30 underline-offset-4 transition-colors hover:decoration-brown dark:text-cream dark:decoration-cream/30 dark:hover:decoration-cream">Prof. Raj Jain</Link>. My research explores the space between advanced networking systems and emerging computation models, currently focused on <span className="inline-block rounded-lg bg-quantum-accent/20 px-1.5 font-bold text-brown dark:bg-quantum-accent/30 dark:text-cream">quantum networking</span>—how future quantum devices might connect, share entanglement, and collaborate across a network.
             </motion.p>
 
             <motion.div 
@@ -90,7 +90,7 @@ export function Hero() {
               className="relative h-full w-full overflow-hidden rounded-[2rem] border-4 border-white shadow-2xl dark:border-brown-light"
             >
               <Image
-                src="/images/citations.jpeg"
+                src="/images/profile.jpeg"
                 alt="Chenliang (Momo) Tian"
                 fill
                 className="object-cover"
