@@ -1,21 +1,32 @@
 import { getAllPosts } from '@/lib/mdx';
 import { Header } from '@/components/Header';
-import Link from 'next/link';
-import { format, parseISO } from 'date-fns';
 import { LogSearch } from '@/components/LogSearch';
 
 export default function LogsPage() {
   const logs = getAllPosts('logs');
 
   return (
-    <div className="min-h-screen bg-white dark:bg-black">
+    <div className="min-h-screen bg-cream dark:bg-brown">
       <Header />
-      <main className="container mx-auto max-w-4xl px-4 py-12">
-        <h1 className="mb-8 text-4xl font-bold tracking-tight text-gray-900 dark:text-white">
-          Learning Log
-        </h1>
+      <main className="container mx-auto max-w-4xl px-4 py-10 md:py-14">
+        {/* Top runner */}
+        <div className="flex items-center justify-between text-[0.625rem] md:text-xs font-bold uppercase tracking-[0.18em] text-taupe">
+          <span>Logs &middot; Chenliang Tian &middot; WashU</span>
+          <span className="hidden sm:inline">Section &middot; N&ordm;&nbsp;03</span>
+        </div>
+        <hr className="mt-3 mb-12 border-0 border-t border-foreground/15" />
+
+        <header className="mb-12 md:mb-16">
+          <p className="mb-5 text-xs md:text-sm font-bold uppercase tracking-[0.22em] text-terracotta">
+            Field Notes &middot; What I&rsquo;m Learning
+          </p>
+          <h1 className="font-display text-5xl md:text-6xl lg:text-7xl leading-[0.95] tracking-tight text-foreground">
+            Learning log.
+          </h1>
+        </header>
+
         <LogSearch initialLogs={logs} />
       </main>
-    </div >
+    </div>
   );
 }

@@ -1,22 +1,15 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+// Fonts are loaded via @import in globals.css:
+//   Heading: Didot (system) → Bodoni Moda (Google Fonts)
+//   Body:    Avenir Next (system) → Inter (Google Fonts)
 
 export const metadata: Metadata = {
   title: {
-    default: "Chenliang (Momo) Tian - PhD Student in Computer Science at WashU",
-    template: "%s | Chenliang (Momo) Tian"
+    default: "Chenliang Tian - PhD Student in Computer Science at WashU",
+    template: "%s | Chenliang Tian"
   },
   description: "Chenliang Tian is a PhD student in Computer Science & Engineering at Washington University in St. Louis, researching quantum networking.",
   keywords: [
@@ -62,7 +55,7 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: 'https://chenliangtian.github.io',
-    title: 'Chenliang (Momo) Tian - PhD Student in Computer Science at WashU',
+    title: 'Chenliang Tian - PhD Student in Computer Science at WashU',
     description: 'PhD student researching quantum networking at Washington University in St. Louis.',
     siteName: 'Chenliang Tian',
     images: [
@@ -76,7 +69,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Chenliang (Momo) Tian - PhD Student in Computer Science',
+    title: 'Chenliang Tian - PhD Student in Computer Science',
     description: 'PhD student researching quantum networking.',
     images: ['/images/profile.jpeg'],
   },
@@ -111,8 +104,7 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Person",
-              name: "Chenliang (Momo) Tian",
-              alternateName: "Momo Tian",
+              name: "Chenliang Tian",
               url: "https://chenliangtian.github.io",
               image: "https://chenliangtian.github.io/images/profile.jpeg",
               jobTitle: "PhD Student",
@@ -151,7 +143,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`} suppressHydrationWarning={true}>
+      <body className="antialiased" suppressHydrationWarning={true}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

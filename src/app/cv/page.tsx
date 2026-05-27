@@ -1,12 +1,15 @@
 import { Header } from "@/components/Header";
-import { Download, Mail, Phone, MapPin, ExternalLink, GraduationCap, BookOpen, FlaskConical, Presentation, Award, Wrench, Languages, Users } from "lucide-react";
+import { Download, Mail, Phone, MapPin, ExternalLink } from "lucide-react";
 import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Curriculum Vitae",
-  description: "Academic CV of Chenliang (Momo) Tian — PhD Student in Computer Science & Engineering at Washington University in St. Louis.",
+  description:
+    "Academic CV of Chenliang Tian — PhD Student in Computer Science & Engineering at Washington University in St. Louis.",
 };
+
+// ───── Data ───────────────────────────────────────────────────────────────────
 
 type Publication = {
   authors: string;
@@ -18,21 +21,26 @@ type Publication = {
 
 const publications: Publication[] = [
   {
-    authors: "C. Tian, Z. Yang, R. Jain, R. Kompella, R. Nejabati, E. Kaur, A. Erbad, M. Abdallah, and M. Hamdi",
-    title: "RADAR-Q: Resource-Aware Distributed Asynchronous Routing for Entanglement Distribution in Multi-Tenant Quantum Networks",
+    authors:
+      "C. Tian, Z. Yang, R. Jain, R. Kompella, R. Nejabati, E. Kaur, A. Erbad, M. Abdallah, and M. Hamdi",
+    title:
+      "RADAR-Q: Resource-Aware Distributed Asynchronous Routing for Entanglement Distribution in Multi-Tenant Quantum Networks",
     venue: "5th International Conference on Innovations in Computing Research (ICR'26)",
     details: "Berlin, Germany",
     year: "Aug. 2026",
   },
   {
-    authors: "C. Tian, Z. Yang, R. Kompella, A. Erbad, R. Nejabati, M. Hamdi, R. Jain, E. Kaur, and M. Abdallah",
+    authors:
+      "C. Tian, Z. Yang, R. Kompella, A. Erbad, R. Nejabati, M. Hamdi, R. Jain, E. Kaur, and M. Abdallah",
     title: "Asynchronous Routing for Multipartite Entanglement in Quantum Networks",
-    venue: "Proc. 2026 IEEE 16th Annual Computing and Communication Workshop and Conference (CCWC)",
+    venue:
+      "Proc. 2026 IEEE 16th Annual Computing and Communication Workshop and Conference (CCWC)",
     details: "Las Vegas, NV, USA, pp. 533–541",
     year: "2026",
   },
   {
-    authors: "Z. Yang, C. Tian, R. Jain, R. Kompella, R. Nejabati, M. Hamdi, A. Erbad, and H. Shapourian",
+    authors:
+      "Z. Yang, C. Tian, R. Jain, R. Kompella, R. Nejabati, M. Hamdi, A. Erbad, and H. Shapourian",
     title: "Effective Scheduling for Quantum Data Centers",
     venue: "Proc. 2025 IEEE International Conference on Quantum Computing and Engineering (QCE)",
     details: "pp. 454–455",
@@ -43,7 +51,7 @@ const publications: Publication[] = [
 function renderAuthors(authors: string) {
   return authors.split(/(C\. Tian)/g).map((part, i) =>
     part === "C. Tian" ? (
-      <strong key={i} className="font-bold text-brown dark:text-cream">
+      <strong key={i} className="font-bold text-foreground">
         {part}
       </strong>
     ) : (
@@ -66,7 +74,10 @@ const education: Education[] = [
     location: "St. Louis, MO, USA",
     degree: "Ph.D. in Computer Science & Engineering",
     period: "Aug. 2025 – Present",
-    notes: ["Advisor: Prof. Raj Jain", "Research focus: Quantum networking, entanglement distribution, multi-tenant quantum systems"],
+    notes: [
+      "Advisor: Prof. Raj Jain",
+      "Research focus: Quantum networking, entanglement distribution, multi-tenant quantum systems",
+    ],
   },
   {
     school: "Washington University in St. Louis",
@@ -83,7 +94,14 @@ const education: Education[] = [
   },
 ];
 
-const research = [
+type Experience = {
+  title: string;
+  org: string;
+  period: string;
+  bullets: string[];
+};
+
+const research: Experience[] = [
   {
     title: "Graduate Researcher — Quantum Networking",
     org: "Washington University in St. Louis, with Prof. Raj Jain",
@@ -97,7 +115,7 @@ const research = [
   },
 ];
 
-const teaching = [
+const teaching: Experience[] = [
   {
     title: "Teaching Assistant",
     org: "McKelvey School of Engineering, Washington University in St. Louis",
@@ -109,7 +127,7 @@ const teaching = [
   },
 ];
 
-const industry = [
+const industry: Experience[] = [
   {
     title: "Full Stack Software Engineer Intern",
     org: "BluPurple Design & Interactive Media Ltd., Macao SAR, China",
@@ -145,7 +163,7 @@ const memberships = [
   "Institution of Engineering and Technology (IET)",
 ];
 
-const skills = {
+const skills: Record<string, string[]> = {
   Programming: ["Python", "Java", "C++", "JavaScript", "Dart"],
   "Frameworks & Tools": ["Flutter", "Django", "MongoDB", "MySQL", "LaTeX"],
   Web: ["HTML", "CSS", "TypeScript", "React / Next.js"],
@@ -157,273 +175,315 @@ const languages = [
   { name: "Cantonese", level: "Working Proficient" },
 ];
 
-function SectionHeading({ icon: Icon, children }: { icon: React.ComponentType<{ className?: string }>; children: React.ReactNode }) {
+// ───── Layout primitives ─────────────────────────────────────────────────────
+
+function ChapterHead({
+  numeral,
+  eyebrow,
+  title,
+  lede,
+}: {
+  numeral: string;
+  eyebrow: string;
+  title: string;
+  lede?: string;
+}) {
   return (
-    <div className="mb-6 flex items-center gap-3 border-b-2 border-brown/15 pb-3 dark:border-cream/15">
-      <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-pastel-pink/15 text-pastel-pink dark:bg-pastel-pink/20">
-        <Icon className="h-5 w-5" />
-      </span>
-      <h2 className="font-heading text-2xl md:text-3xl font-bold text-brown dark:text-cream">{children}</h2>
-    </div>
+    <header className="mb-10 grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-10 items-baseline">
+      <div className="md:col-span-3">
+        <p className="font-display text-6xl md:text-7xl text-terracotta leading-none">
+          {numeral}
+        </p>
+        <p className="mt-2 text-[0.6875rem] font-bold uppercase tracking-[0.2em] text-taupe">
+          {eyebrow}
+        </p>
+      </div>
+      <div className="md:col-span-9">
+        <h2 className="font-display text-3xl md:text-5xl leading-tight text-foreground">
+          {title}
+        </h2>
+        {lede && (
+          <p className="mt-3 font-display italic text-lg md:text-xl text-foreground/70 max-w-2xl leading-snug">
+            {lede}
+          </p>
+        )}
+      </div>
+    </header>
   );
 }
+
+function Rule() {
+  return <hr className="my-16 md:my-20 border-0 border-t border-foreground/15" />;
+}
+
+// ───── Page ──────────────────────────────────────────────────────────────────
 
 export default function CVPage() {
   return (
     <div className="min-h-screen bg-cream dark:bg-brown">
       <Header />
-      <main className="container mx-auto max-w-4xl px-4 py-12 md:py-16">
-        {/* Header card */}
-        <section className="mb-12 rounded-3xl border border-brown/10 bg-white p-8 shadow-sm dark:border-cream/10 dark:bg-white/5 md:p-10">
-          <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
-            <div>
-              <h1 className="mb-2 font-heading text-4xl font-bold text-brown dark:text-cream md:text-5xl">
-                Chenliang (Momo) Tian
-              </h1>
-              <p className="mb-4 text-lg text-brown/80 dark:text-cream/80">
-                Ph.D. Student, Computer Science &amp; Engineering
-                <br />
-                <Link
-                  href="https://wustl.edu"
-                  className="font-medium underline decoration-brown/30 underline-offset-4 hover:decoration-brown dark:decoration-cream/30 dark:hover:decoration-cream"
-                >
-                  Washington University in St. Louis
-                </Link>
-              </p>
-              <ul className="flex flex-col gap-2 text-sm text-brown/75 dark:text-cream/75 md:text-base">
-                <li className="flex items-center gap-2">
-                  <Mail className="h-4 w-4 shrink-0" />
-                  <Link href="mailto:chenliang.t@wustl.edu" className="hover:text-brown dark:hover:text-cream">
-                    chenliang.t@wustl.edu
-                  </Link>
-                </li>
-                <li className="flex items-center gap-2">
-                  <Phone className="h-4 w-4 shrink-0" />
-                  <span>+1 (314) 574-7476</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <MapPin className="h-4 w-4 shrink-0" />
-                  <span>6640 Washington Ave, St. Louis, MO 63130</span>
-                </li>
-              </ul>
+      <main className="container mx-auto max-w-4xl px-4 py-10 md:py-14">
+        {/* Top runner */}
+        <div className="flex items-center justify-between text-[0.625rem] md:text-xs font-bold uppercase tracking-[0.18em] text-taupe">
+          <span>Curriculum Vitae &middot; Chenliang Tian &middot; WashU</span>
+          <span className="hidden sm:inline">Issue &middot; N&ordm;&nbsp;01</span>
+        </div>
+        <hr className="mt-3 mb-12 border-0 border-t border-foreground/15" />
+
+        {/* Title block */}
+        <section className="mb-16 md:mb-20">
+          <p className="mb-5 text-xs md:text-sm font-bold uppercase tracking-[0.22em] text-terracotta">
+            The Author &middot; A Brief Record &middot; 2026
+          </p>
+          <h1 className="font-display text-5xl sm:text-6xl md:text-7xl leading-[0.95] tracking-tight text-foreground">
+            Chenliang
+            <br />
+            Tian.
+          </h1>
+          <p className="mt-6 font-display italic text-xl md:text-2xl text-terracotta leading-snug max-w-2xl">
+            Ph.D. Student, Computer Science &amp; Engineering &mdash;{" "}
+            <Link
+              href="https://wustl.edu"
+              className="not-italic underline decoration-terracotta/40 underline-offset-[5px] decoration-1 hover:decoration-terracotta"
+            >
+              Washington University in St. Louis
+            </Link>
+            .
+          </p>
+
+          {/* Contact grid */}
+          <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-y-3 sm:gap-x-8 text-sm text-foreground/85">
+            <div className="flex items-center gap-2">
+              <Mail className="h-4 w-4 shrink-0 text-taupe" />
+              <Link href="mailto:chenliang.t@wustl.edu" className="hover:text-terracotta">
+                chenliang.t@wustl.edu
+              </Link>
             </div>
-            <div className="flex flex-col gap-3">
-              <a
-                href="/CV_Chenliang_Tian.pdf"
-                download
-                className="group inline-flex items-center justify-center gap-2 rounded-2xl bg-brown px-6 py-3 text-base font-bold text-cream transition-all hover:scale-105 hover:shadow-xl hover:shadow-brown/20 dark:bg-cream dark:text-brown dark:hover:shadow-white/10"
-              >
-                <Download className="h-4 w-4 transition-transform group-hover:translate-y-0.5" />
-                Download CV (PDF)
-              </a>
-              <a
-                href="/CV_Chenliang_Tian.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group inline-flex items-center justify-center gap-2 rounded-2xl border-2 border-brown/80 px-6 py-3 text-base font-medium text-brown transition-all hover:bg-brown/5 dark:border-cream/80 dark:text-cream dark:hover:bg-cream/10"
-              >
-                <ExternalLink className="h-4 w-4" />
-                View in browser
-              </a>
+            <div className="flex items-center gap-2">
+              <Phone className="h-4 w-4 shrink-0 text-taupe" />
+              <span>+1 (314) 574-7476</span>
             </div>
+            <div className="flex items-center gap-2">
+              <MapPin className="h-4 w-4 shrink-0 text-taupe" />
+              <span>St. Louis, MO 63130</span>
+            </div>
+          </div>
+
+          {/* Download links */}
+          <div className="mt-8 flex flex-col sm:flex-row gap-3 sm:gap-6">
+            <a
+              href="/CV_Chenliang_Tian.pdf"
+              download
+              className="group inline-flex items-center gap-2 text-sm font-bold uppercase tracking-[0.18em] text-foreground border-b-2 border-foreground pb-1 transition-colors hover:text-terracotta hover:border-terracotta"
+            >
+              <Download className="h-4 w-4" />
+              Download PDF
+            </a>
+            <a
+              href="/CV_Chenliang_Tian.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex items-center gap-2 text-sm font-bold uppercase tracking-[0.18em] text-foreground/75 border-b-2 border-foreground/20 pb-1 transition-colors hover:text-terracotta hover:border-terracotta"
+            >
+              <ExternalLink className="h-4 w-4" />
+              View in Browser
+            </a>
           </div>
         </section>
 
-        {/* Research Interests */}
-        <section className="mb-12">
-          <SectionHeading icon={FlaskConical}>Research Interests</SectionHeading>
-          <p className="text-base leading-relaxed text-brown/85 dark:text-cream/85 md:text-lg">
-            Quantum networking and quantum data centers, with a focus on distributed routing and
-            scheduling for entanglement distribution, multi-tenant resource management,
-            multipartite (GHZ) entanglement protocols, and the interface between quantum and
-            classical network systems.
-          </p>
+        <Rule />
+
+        {/* Research interests */}
+        <section>
+          <ChapterHead
+            numeral="I."
+            eyebrow="Chapter One"
+            title="Research interests."
+            lede="Quantum networking and quantum data centers — distributed routing, scheduling, multipartite entanglement, and the interface between quantum and classical systems."
+          />
         </section>
+
+        <Rule />
 
         {/* Education */}
-        <section className="mb-12">
-          <SectionHeading icon={GraduationCap}>Education</SectionHeading>
-          <div className="flex flex-col gap-6">
+        <section>
+          <ChapterHead numeral="II." eyebrow="Chapter Two" title="Education." />
+          <ul className="flex flex-col divide-y divide-foreground/10">
             {education.map((e) => (
-              <div
-                key={`${e.school}-${e.degree}`}
-                className="rounded-2xl border border-brown/10 bg-white p-6 dark:border-cream/10 dark:bg-white/5"
-              >
-                <div className="mb-1 flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
-                  <h3 className="font-heading text-xl font-bold text-brown dark:text-cream">{e.school}</h3>
-                  <span className="text-sm font-medium text-brown/60 dark:text-cream/60">{e.period}</span>
-                </div>
-                <p className="mb-1 italic text-brown/80 dark:text-cream/80">{e.degree}</p>
-                <p className={`text-sm text-brown/60 dark:text-cream/60 ${e.notes && e.notes.length > 0 ? "mb-3" : ""}`}>{e.location}</p>
-                {e.notes && e.notes.length > 0 && (
-                  <ul className="list-disc space-y-1 pl-5 text-sm text-brown/75 dark:text-cream/75 md:text-base">
-                    {e.notes.map((n) => (
-                      <li key={n}>{n}</li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Publications */}
-        <section className="mb-12">
-          <SectionHeading icon={BookOpen}>Publications</SectionHeading>
-          <ul className="flex list-none flex-col gap-5">
-            {publications.map((p) => (
               <li
-                key={p.title}
-                className="rounded-2xl border border-brown/10 bg-white p-5 dark:border-cream/10 dark:bg-white/5 md:p-6"
+                key={`${e.school}-${e.degree}`}
+                className="py-6 grid grid-cols-1 md:grid-cols-12 gap-2 md:gap-8"
               >
-                <p className="mb-1 text-sm leading-relaxed text-brown/70 dark:text-cream/70">
-                  {renderAuthors(p.authors)}
+                <p className="md:col-span-3 text-xs font-bold uppercase tracking-[0.18em] text-taupe">
+                  {e.period}
                 </p>
-                <p className="mb-2 font-heading text-lg font-bold leading-snug text-brown dark:text-cream">
-                  &ldquo;{p.title}&rdquo;
-                </p>
-                <p className="text-sm italic text-brown/80 dark:text-cream/80">
-                  {p.venue}
-                  {p.details ? `, ${p.details}` : ""}, {p.year}.
-                </p>
+                <div className="md:col-span-9">
+                  <h3 className="font-display text-2xl md:text-3xl leading-tight text-foreground">
+                    {e.school}
+                  </h3>
+                  <p className="mt-1 font-display italic text-lg text-terracotta">{e.degree}</p>
+                  <p className="mt-1 text-sm text-taupe">{e.location}</p>
+                  {e.notes && e.notes.length > 0 && (
+                    <ul className="mt-3 list-disc pl-5 space-y-1 text-sm md:text-base text-foreground/85 marker:text-taupe">
+                      {e.notes.map((n) => (
+                        <li key={n}>{n}</li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
               </li>
             ))}
           </ul>
         </section>
 
-        {/* Research Experience */}
-        <section className="mb-12">
-          <SectionHeading icon={FlaskConical}>Research Experience</SectionHeading>
-          <div className="flex flex-col gap-6">
-            {research.map((r) => (
-              <ExperienceBlock key={r.title} {...r} />
+        <Rule />
+
+        {/* Publications */}
+        <section>
+          <ChapterHead numeral="III." eyebrow="Chapter Three" title="Publications." />
+          <ul className="flex flex-col divide-y divide-foreground/10">
+            {publications.map((p) => (
+              <li key={p.title} className="py-7 grid grid-cols-1 md:grid-cols-12 gap-2 md:gap-8">
+                <p className="md:col-span-3 text-xs font-bold uppercase tracking-[0.18em] text-taupe">
+                  {p.year}
+                </p>
+                <div className="md:col-span-9">
+                  <h3 className="font-display text-xl md:text-2xl leading-snug text-foreground">
+                    &ldquo;{p.title}&rdquo;
+                  </h3>
+                  <p className="mt-3 text-sm leading-relaxed text-foreground/85">
+                    {renderAuthors(p.authors)}
+                  </p>
+                  <p className="mt-2 font-display italic text-base text-taupe">
+                    {p.venue}
+                    {p.details ? `, ${p.details}` : ""}.
+                  </p>
+                </div>
+              </li>
             ))}
-          </div>
+          </ul>
         </section>
+
+        <Rule />
+
+        {/* Research Experience */}
+        <section>
+          <ChapterHead numeral="IV." eyebrow="Chapter Four" title="Research experience." />
+          <ExperienceList items={research} />
+        </section>
+
+        <Rule />
 
         {/* Teaching */}
-        <section className="mb-12">
-          <SectionHeading icon={Presentation}>Teaching Experience</SectionHeading>
-          <div className="flex flex-col gap-6">
-            {teaching.map((t) => (
-              <ExperienceBlock key={t.title} {...t} />
-            ))}
-          </div>
+        <section>
+          <ChapterHead numeral="V." eyebrow="Chapter Five" title="Teaching experience." />
+          <ExperienceList items={teaching} />
         </section>
+
+        <Rule />
 
         {/* Industry */}
-        <section className="mb-12">
-          <SectionHeading icon={Wrench}>Industry Experience</SectionHeading>
-          <div className="flex flex-col gap-6">
-            {industry.map((j) => (
-              <ExperienceBlock key={j.title} {...j} />
-            ))}
-          </div>
+        <section>
+          <ChapterHead numeral="VI." eyebrow="Chapter Six" title="Industry experience." />
+          <ExperienceList items={industry} />
         </section>
 
+        <Rule />
+
         {/* Awards */}
-        <section className="mb-12">
-          <SectionHeading icon={Award}>Honors &amp; Awards</SectionHeading>
-          <ul className="flex flex-col gap-3">
+        <section>
+          <ChapterHead numeral="VII." eyebrow="Chapter Seven" title="Honors &amp; awards." />
+          <ul className="flex flex-col divide-y divide-foreground/10">
             {awards.map((a) => (
               <li
                 key={`${a.name}-${a.detail}`}
-                className="flex flex-col gap-1 rounded-2xl border border-brown/10 bg-white p-5 dark:border-cream/10 dark:bg-white/5 sm:flex-row sm:items-center sm:justify-between"
+                className="py-5 grid grid-cols-1 md:grid-cols-12 gap-2 md:gap-8"
               >
-                <div>
-                  <p className="font-heading text-lg font-bold text-brown dark:text-cream">{a.name}</p>
-                  <p className="text-sm text-brown/75 dark:text-cream/75">{a.detail}</p>
+                <p className="md:col-span-3 text-xs font-bold uppercase tracking-[0.18em] text-taupe">
+                  {a.year}
+                </p>
+                <div className="md:col-span-9">
+                  <p className="font-display text-xl text-foreground">{a.name}</p>
+                  <p className="mt-1 text-sm text-foreground/75">{a.detail}</p>
                 </div>
-                <span className="text-sm font-medium text-brown/60 dark:text-cream/60">{a.year}</span>
               </li>
             ))}
           </ul>
         </section>
 
-        {/* Skills */}
-        <section className="mb-12">
-          <SectionHeading icon={Wrench}>Technical Skills</SectionHeading>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {Object.entries(skills).map(([category, items]) => (
-              <div
-                key={category}
-                className="rounded-2xl border border-brown/10 bg-white p-5 dark:border-cream/10 dark:bg-white/5"
-              >
-                <h3 className="mb-3 font-heading text-base font-bold text-brown dark:text-cream">{category}</h3>
-                <div className="flex flex-wrap gap-2">
-                  {items.map((s) => (
-                    <span
-                      key={s}
-                      className="rounded-full bg-quantum-light px-3 py-1 text-xs font-medium text-brown dark:bg-quantum-accent/20 dark:text-cream"
-                    >
-                      {s}
-                    </span>
-                  ))}
-                </div>
+        <Rule />
+
+        {/* Skills + Languages + Memberships — three columns */}
+        <section>
+          <ChapterHead numeral="VIII." eyebrow="Colophon" title="Skills, languages, memberships." />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12">
+            <div>
+              <p className="eyebrow mb-4">Technical Skills</p>
+              <div className="space-y-4">
+                {Object.entries(skills).map(([category, items]) => (
+                  <div key={category}>
+                    <p className="font-display italic text-base text-terracotta mb-1">
+                      {category}
+                    </p>
+                    <p className="text-sm text-foreground/85 leading-relaxed">
+                      {items.join(" · ")}
+                    </p>
+                  </div>
+                ))}
               </div>
-            ))}
+            </div>
+            <div>
+              <p className="eyebrow mb-4">Languages</p>
+              <ul className="space-y-3">
+                {languages.map((l) => (
+                  <li key={l.name}>
+                    <p className="font-display text-lg text-foreground">{l.name}</p>
+                    <p className="text-xs italic text-taupe">{l.level}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <p className="eyebrow mb-4">Memberships</p>
+              <ul className="space-y-3 text-sm text-foreground/85">
+                {memberships.map((m) => (
+                  <li key={m} className="font-display italic text-base">
+                    {m}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </section>
 
-        {/* Languages */}
-        <section className="mb-12">
-          <SectionHeading icon={Languages}>Languages</SectionHeading>
-          <div className="flex flex-wrap gap-3">
-            {languages.map((l) => (
-              <div
-                key={l.name}
-                className="rounded-2xl border border-brown/10 bg-white px-5 py-3 dark:border-cream/10 dark:bg-white/5"
-              >
-                <p className="font-heading text-base font-bold text-brown dark:text-cream">{l.name}</p>
-                <p className="text-xs text-brown/60 dark:text-cream/60">{l.level}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Memberships */}
-        <section className="mb-12">
-          <SectionHeading icon={Users}>Professional Memberships</SectionHeading>
-          <ul className="flex flex-col gap-2 pl-5 text-base text-brown/85 dark:text-cream/85">
-            {memberships.map((m) => (
-              <li key={m} className="list-disc">
-                {m}
-              </li>
-            ))}
-          </ul>
-        </section>
-
-        <p className="mt-10 text-center text-xs text-brown/50 dark:text-cream/50">
-          Last updated May 2026. For the printable version, please use the download link above.
+        <hr className="mt-20 mb-8 border-0 border-t border-foreground/15" />
+        <p className="text-center text-[0.6875rem] font-bold uppercase tracking-[0.22em] text-taupe">
+          End of Document &middot; Last Updated May 2026
         </p>
       </main>
     </div>
   );
 }
 
-function ExperienceBlock({
-  title,
-  org,
-  period,
-  bullets,
-}: {
-  title: string;
-  org: string;
-  period: string;
-  bullets: string[];
-}) {
+function ExperienceList({ items }: { items: Experience[] }) {
   return (
-    <div className="rounded-2xl border border-brown/10 bg-white p-6 dark:border-cream/10 dark:bg-white/5">
-      <div className="mb-1 flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
-        <h3 className="font-heading text-xl font-bold text-brown dark:text-cream">{title}</h3>
-        <span className="text-sm font-medium text-brown/60 dark:text-cream/60">{period}</span>
-      </div>
-      <p className="mb-3 italic text-brown/80 dark:text-cream/80">{org}</p>
-      <ul className="list-disc space-y-2 pl-5 text-sm text-brown/85 dark:text-cream/85 md:text-base">
-        {bullets.map((b) => (
-          <li key={b}>{b}</li>
-        ))}
-      </ul>
-    </div>
+    <ul className="flex flex-col divide-y divide-foreground/10">
+      {items.map((j) => (
+        <li key={j.title} className="py-6 grid grid-cols-1 md:grid-cols-12 gap-2 md:gap-8">
+          <p className="md:col-span-3 text-xs font-bold uppercase tracking-[0.18em] text-taupe">
+            {j.period}
+          </p>
+          <div className="md:col-span-9">
+            <h3 className="font-display text-2xl leading-tight text-foreground">{j.title}</h3>
+            <p className="mt-1 font-display italic text-base text-terracotta">{j.org}</p>
+            <ul className="mt-3 list-disc pl-5 space-y-2 text-sm md:text-base text-foreground/85 marker:text-taupe">
+              {j.bullets.map((b) => (
+                <li key={b}>{b}</li>
+              ))}
+            </ul>
+          </div>
+        </li>
+      ))}
+    </ul>
   );
 }

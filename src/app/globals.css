@@ -1,18 +1,24 @@
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..900&family=Quicksand:wght@300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Inter:wght@300..800&display=swap');
 @import "tailwindcss";
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/*
+ * EditorialQuarterly palette + typography.
+ * Heading: Didot on Apple devices, Bodoni Moda everywhere else (both didone serifs).
+ * Body: Avenir Next on Apple devices, Inter as web fallback (both geometric sans).
+ */
 @layer base {
   :root {
-    --font-heading: 'Fraunces', serif;
-    --font-body: 'Quicksand', sans-serif;
+    --font-heading: 'Didot', 'Bodoni Moda', 'Bodoni 72', Georgia, serif;
+    --font-body: 'Avenir Next', 'Avenir', 'Inter', system-ui, -apple-system, sans-serif;
   }
 
   body {
-    font-family: var(--font-body), system-ui, sans-serif;
+    font-family: var(--font-body);
+    font-feature-settings: "ss01", "cv01";
   }
 
   h1,
@@ -21,15 +27,18 @@
   h4,
   h5,
   h6 {
-    font-family: var(--font-heading), serif;
+    font-family: var(--font-heading);
+    letter-spacing: -0.01em;
   }
 }
 
 :root {
-  --background: #FFF8E7;
-  /* Cream */
-  --foreground: #4A3B32;
-  /* Dark Brown */
+  --background: #FFFFFF;
+  /* White paper */
+  --foreground: #1C1A17;
+  /* Ink */
+  --nav-bg: #F5F3ED;
+  /* Warm off-white for the navigation bar */
 }
 
 @theme inline {
@@ -38,32 +47,66 @@
   --font-heading: var(--font-heading);
   --font-body: var(--font-body);
 
-  --color-cream: #FFF8E7;
-  --color-brown: #4A3B32;
-  --color-brown-light: #8D7B68;
-  --color-pastel-pink: #FF9966;
-  --color-pastel-blue: #AEC6CF;
-  --color-pastel-yellow: #FDE68A;
+  /* Editorial palette — names kept for backward compatibility, values shifted. */
+  --color-cream: #FFFFFF;        /* page background (now white paper) */
+  --color-paper: #FFFFFF;        /* alias */
+  --color-paper-warm: #FAF6EE;   /* very subtle warm off-white for callouts */
+  --color-nav: var(--nav-bg);    /* navigation bar background, switches with theme */
+  --color-brown: #1C1A17;        /* ink (near-black, warm) */
+  --color-brown-light: #6B6052;  /* taupe — eyebrows, captions */
+  --color-taupe: #6B6052;        /* alias */
+  --color-taupe-dark: #9C8F73;   /* deeper taupe */
+  --color-beige: #C8BCA3;        /* warm beige */
 
-  /* CPS colors removed */
+  /* Accent — terracotta (was pastel-pink). Token name kept so existing utilities still work. */
+  --color-pastel-pink: #B83A26;
+  --color-accent: #B83A26;       /* preferred new name */
+  --color-terracotta: #B83A26;   /* explicit */
+  --color-accent-soft: #D86A55;  /* lighter terracotta for hover */
 
-  --color-quantum: #4A3B32;
-  --color-quantum-accent: #AEC6CF;
-  /* Blue for Quantum */
-  --color-quantum-light: #F0F8FF;
+  /* Legacy aliases pointing into the new palette so secondary pages keep working. */
+  --color-pastel-blue: #C8BCA3;
+  --color-pastel-yellow: #E6DCC3;
+  --color-quantum: #1C1A17;
+  --color-quantum-accent: #B83A26;
+  --color-quantum-light: #E6DCC3;
 }
 
 @custom-variant dark (&:where(.dark, .dark *));
 
 .dark {
-  --background: #2D2420;
-  /* Deep Warm Grey */
-  --foreground: #FDF6E3;
-  /* Soft Cream */
+  --background: #1C1A17;
+  /* Ink as background */
+  --foreground: #F2EBD8;
+  /* Paper as foreground */
+  --nav-bg: #252220;
+  /* Slightly lifted dark for navigation contrast */
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Editorial utilities */
+.font-display {
+  font-family: var(--font-heading);
+}
+
+.eyebrow {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.6875rem;       /* ~11pt */
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-terracotta);
+}
+
+.runner {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.625rem;        /* ~10pt */
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-taupe);
 }

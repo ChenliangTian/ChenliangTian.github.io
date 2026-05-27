@@ -1,7 +1,5 @@
-import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { cn } from '@/lib/utils';
 
 interface ResearchCardProps {
   title: string;
@@ -13,56 +11,47 @@ interface ResearchCardProps {
   image?: string;
 }
 
-export function ResearchCard({ title, description, tags, link, date, type, image }: ResearchCardProps) {
+export function ResearchCard({ title, description, tags, link, type, image }: ResearchCardProps) {
   return (
-    <div className="group block h-full">
-      <div className="group flex flex-col overflow-hidden rounded-3xl bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-md dark:bg-white/5">
-        {/* Image Section */}
-        <div className="relative h-48 w-full overflow-hidden bg-gray-100 dark:bg-white/5">
-          {image ? (
-            <Image
-              src={image}
-              alt={title}
-              fill
-              className="object-cover"
-            />
-          ) : (
-            <div className="absolute inset-0 flex items-center justify-center text-4xl">
-              {type === 'cps' ? '⚡️' : '⚛️'}
-            </div>
-          )}
-        </div>
-
-        {/* Content Section */}
-        <div className="flex flex-1 flex-col p-6">
-          <div className="mb-4 flex flex-wrap gap-2">
-            {tags.map((tag) => (
-              <span
-                key={tag}
-                className="rounded-full bg-pastel-yellow/30 px-3 py-1 text-xs font-bold text-brown dark:bg-pastel-yellow/10 dark:text-pastel-yellow"
-              >
-                {tag}
-              </span>
-            ))}
+    <article className="group flex h-full flex-col">
+      {/* Image */}
+      <div className="relative aspect-[4/3] w-full overflow-hidden border border-foreground/10 bg-paper-warm dark:bg-white/5">
+        {image ? (
+          <Image
+            src={image}
+            alt={title}
+            fill
+            className="object-cover grayscale-[0.1] transition-transform duration-700 group-hover:scale-105"
+          />
+        ) : (
+          <div className="absolute inset-0 flex items-center justify-center font-display text-7xl text-terracotta">
+            {type === 'cps' ? 'C.' : 'Q.'}
           </div>
-
-          <h3 className="mb-3 text-xl font-bold text-brown dark:text-cream font-heading">
-            {title}
-          </h3>
-
-          <p className="mb-6 flex-grow text-brown/70 dark:text-cream/70">
-            {description}
-          </p>
-
-          <Link
-            href={link || '#'}
-            className="group/link inline-flex items-center text-sm font-bold text-brown transition-colors hover:text-brown-light dark:text-cream dark:hover:text-cream/80"
-          >
-            Read more
-            <span className="ml-2 transition-transform group-hover/link:translate-x-1">→</span>
-          </Link>
-        </div>
+        )}
       </div>
-    </div>
+
+      {/* Content */}
+      <div className="flex flex-1 flex-col pt-5">
+        <p className="mb-3 text-[0.6875rem] font-bold uppercase tracking-[0.18em] text-taupe">
+          {tags.join(' · ')}
+        </p>
+
+        <h3 className="font-display text-2xl leading-tight text-foreground transition-colors group-hover:text-terracotta">
+          {title}
+        </h3>
+
+        <p className="mt-3 flex-grow font-display italic text-base text-foreground/75 leading-snug">
+          {description}
+        </p>
+
+        <Link
+          href={link || '#'}
+          className="mt-5 inline-flex items-center gap-2 self-start text-xs font-bold uppercase tracking-[0.18em] text-foreground border-b-2 border-foreground pb-1 transition-colors hover:text-terracotta hover:border-terracotta"
+        >
+          Read More
+          <span className="transition-transform group-hover:translate-x-1">→</span>
+        </Link>
+      </div>
+    </article>
   );
 }

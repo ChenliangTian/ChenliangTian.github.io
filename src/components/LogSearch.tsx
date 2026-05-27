@@ -41,39 +41,41 @@ export function LogSearch({ initialLogs }: LogSearchProps) {
     }, [initialLogs, searchQuery, selectedTag]);
 
     return (
-        <div className="space-y-8">
+        <div className="space-y-10">
             {/* Search and Filter Controls */}
-            <div className="space-y-4">
-                {/* Search Input */}
+            <div className="space-y-6">
+                {/* Search Input — bottom-border only, no chrome */}
                 <div className="relative">
-                    <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                        <Search className="h-5 w-5 text-gray-400" />
-                    </div>
+                    <Search className="pointer-events-none absolute left-0 top-1/2 -translate-y-1/2 h-4 w-4 text-taupe" />
                     <input
                         type="text"
-                        placeholder="Search logs..."
-                        className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-10 text-sm text-gray-900 focus:border-cps-accent focus:ring-cps-accent dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-cps-accent dark:focus:ring-cps-accent"
+                        placeholder="Search the log…"
+                        className="block w-full border-0 border-b border-foreground/20 bg-transparent py-3 pl-7 pr-8 font-display italic text-lg text-foreground placeholder:text-taupe/70 focus:border-terracotta focus:outline-none focus:ring-0 transition-colors"
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                     />
                     {searchQuery && (
                         <button
                             onClick={() => setSearchQuery('')}
-                            className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-gray-500"
+                            className="absolute right-0 top-1/2 -translate-y-1/2 p-1 text-taupe hover:text-terracotta transition-colors"
+                            aria-label="Clear search"
                         >
                             <X className="h-4 w-4" />
                         </button>
                     )}
                 </div>
 
-                {/* Tags Filter */}
+                {/* Tags Filter — editorial uppercase pills, no background fill */}
                 {allTags.length > 0 && (
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex flex-wrap gap-x-5 gap-y-2 items-center">
+                        <span className="text-[0.6875rem] font-bold uppercase tracking-[0.2em] text-taupe">
+                            Filter
+                        </span>
                         <button
                             onClick={() => setSelectedTag(null)}
-                            className={`rounded-full px-3 py-1 text-sm font-medium transition-colors ${selectedTag === null
-                                    ? 'bg-black text-white dark:bg-white dark:text-black'
-                                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700'
+                            className={`text-xs font-bold uppercase tracking-[0.18em] pb-0.5 border-b-2 transition-colors ${selectedTag === null
+                                ? 'text-terracotta border-terracotta'
+                                : 'text-foreground/60 border-transparent hover:text-terracotta hover:border-terracotta/40'
                                 }`}
                         >
                             All
@@ -82,9 +84,9 @@ export function LogSearch({ initialLogs }: LogSearchProps) {
                             <button
                                 key={tag}
                                 onClick={() => setSelectedTag(tag === selectedTag ? null : tag)}
-                                className={`rounded-full px-3 py-1 text-sm font-medium transition-colors ${selectedTag === tag
-                                        ? 'bg-black text-white dark:bg-white dark:text-black'
-                                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700'
+                                className={`text-xs font-bold uppercase tracking-[0.18em] pb-0.5 border-b-2 transition-colors ${selectedTag === tag
+                                    ? 'text-terracotta border-terracotta'
+                                    : 'text-foreground/60 border-transparent hover:text-terracotta hover:border-terracotta/40'
                                     }`}
                             >
                                 {tag}
@@ -94,44 +96,50 @@ export function LogSearch({ initialLogs }: LogSearchProps) {
                 )}
             </div>
 
-            {/* Results List */}
-            <div className="space-y-8">
+            {/* Results List — editorial entries with period column */}
+            <ul className="flex flex-col divide-y divide-foreground/10">
                 {filteredLogs.length === 0 ? (
-                    <p className="text-center text-gray-500 dark:text-gray-400">
+                    <li className="py-12 text-center italic text-taupe">
                         No logs found matching your criteria.
-                    </p>
+                    </li>
                 ) : (
                     filteredLogs.map((log) => (
-                        <article key={log.metadata.slug} className="group relative flex flex-col space-y-2 border-b border-gray-200 pb-8 dark:border-gray-800">
-                            <div className="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
-                                <time dateTime={log.metadata.date}>
-                                    {format(parseISO(log.metadata.date), 'MMMM d, yyyy')}
-                                </time>
-                                {log.metadata.tags && (
-                                    <div className="flex gap-2">
-                                        {log.metadata.tags.map(tag => (
-                                            <span key={tag} className="rounded-full bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-600 dark:bg-gray-800 dark:text-gray-300">
-                                                {tag}
-                                            </span>
-                                        ))}
-                                    </div>
-                                )}
-                            </div>
-                            <Link href={`/log/${log.metadata.slug}`} className="block">
-                                <h2 className="text-2xl font-bold text-gray-900 group-hover:text-cps-accent dark:text-white">
-                                    {log.metadata.title}
-                                </h2>
+                        <li key={log.metadata.slug}>
+                            <Link
+                                href={`/log/${log.metadata.slug}`}
+                                className="group block py-6 grid grid-cols-1 md:grid-cols-12 gap-2 md:gap-8"
+                            >
+                                <div className="md:col-span-3 space-y-2">
+                                    <p className="text-xs font-bold uppercase tracking-[0.18em] text-taupe">
+                                        <time dateTime={log.metadata.date}>
+                                            {format(parseISO(log.metadata.date), 'MMM d, yyyy')}
+                                        </time>
+                                    </p>
+                                    {log.metadata.tags && log.metadata.tags.length > 0 && (
+                                        <p className="text-[0.6875rem] font-bold uppercase tracking-[0.18em] text-terracotta/80">
+                                            {log.metadata.tags.join(' · ')}
+                                        </p>
+                                    )}
+                                </div>
+                                <div className="md:col-span-9">
+                                    <h2 className="font-display text-2xl md:text-3xl leading-tight text-foreground transition-colors group-hover:text-terracotta">
+                                        {log.metadata.title}
+                                    </h2>
+                                    {log.metadata.description && (
+                                        <p className="mt-2 font-display italic text-base text-foreground/75 leading-snug line-clamp-2">
+                                            {log.metadata.description}
+                                        </p>
+                                    )}
+                                    <span className="mt-3 inline-flex items-center gap-1 text-xs font-bold uppercase tracking-[0.18em] text-foreground/60 group-hover:text-terracotta transition-colors">
+                                        Read Entry
+                                        <span className="transition-transform group-hover:translate-x-1">→</span>
+                                    </span>
+                                </div>
                             </Link>
-                            <p className="text-gray-600 dark:text-gray-400">
-                                {log.metadata.description}
-                            </p>
-                            <Link href={`/log/${log.metadata.slug}`} className="text-sm font-medium text-cps-accent hover:underline">
-                                Read entry →
-                            </Link>
-                        </article>
+                        </li>
                     ))
                 )}
-            </div>
+            </ul>
         </div>
     );
 }

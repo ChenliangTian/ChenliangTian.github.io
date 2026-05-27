@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
-import { cn } from '@/lib/utils';
 import { ThemeToggle } from '@/components/ThemeToggle';
 
 const navItems = [
@@ -18,28 +17,32 @@ export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header suppressHydrationWarning={true} className="sticky top-0 z-50 w-full bg-cream/90 backdrop-blur-sm dark:bg-brown/90 transition-colors duration-300">
+    <header
+      suppressHydrationWarning={true}
+      className="sticky top-0 z-50 w-full bg-nav border-b border-foreground/10"
+    >
       <div className="container mx-auto flex h-16 md:h-20 items-center justify-between px-4">
-        {/* Logo */}
+        {/* Logo — editorial wordmark */}
         <Link
           href="/"
-          className="text-xl md:text-2xl font-bold tracking-tight text-brown dark:text-cream font-heading hover:scale-105 transition-transform"
+          className="font-display font-normal text-2xl md:text-3xl tracking-tight text-foreground transition-colors hover:text-terracotta"
+          aria-label="Home"
         >
-          Chenliang<span className="text-pastel-pink">@WashU</span>
+          Chenliang Tian<span className="text-terracotta">.</span>
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex gap-6 lg:gap-8 items-center">
+        <nav className="hidden md:flex items-center gap-8 lg:gap-10">
           {navItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className="text-base lg:text-lg font-medium text-brown/80 hover:text-brown dark:text-cream/80 dark:hover:text-cream transition-colors font-heading"
+              className="text-xs lg:text-sm font-bold uppercase tracking-[0.18em] text-foreground/75 transition-colors hover:text-terracotta"
             >
               {item.name}
             </Link>
           ))}
-          <div className="pl-4 border-l-2 border-brown/10 dark:border-cream/10">
+          <div className="pl-6 border-l border-foreground/15">
             <ThemeToggle />
           </div>
         </nav>
@@ -49,7 +52,7 @@ export function Header() {
           <ThemeToggle />
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="rounded-md p-2 text-brown dark:text-cream hover:bg-brown/10 dark:hover:bg-cream/10 transition-colors"
+            className="p-2 text-foreground hover:text-terracotta transition-colors"
             aria-label="Toggle menu"
             suppressHydrationWarning={true}
           >
@@ -64,14 +67,14 @@ export function Header() {
 
       {/* Mobile Navigation */}
       {mobileMenuOpen && (
-        <nav className="md:hidden border-t border-brown/10 dark:border-cream/10 bg-cream/95 dark:bg-brown/95 backdrop-blur-sm">
-          <div className="container mx-auto px-4 py-4 flex flex-col gap-2">
+        <nav className="md:hidden border-t border-foreground/10 bg-nav">
+          <div className="container mx-auto px-4 py-4 flex flex-col">
             {navItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className="px-4 py-3 text-lg font-medium text-brown/80 hover:text-brown dark:text-cream/80 dark:hover:text-cream hover:bg-brown/5 dark:hover:bg-cream/5 rounded-lg transition-colors font-heading"
+                className="py-3 text-sm font-bold uppercase tracking-[0.18em] text-foreground/85 hover:text-terracotta border-b border-foreground/10 last:border-b-0 transition-colors"
               >
                 {item.name}
               </Link>

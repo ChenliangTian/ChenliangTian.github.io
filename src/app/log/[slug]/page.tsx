@@ -40,29 +40,34 @@ export default async function LogPage({ params }: LogPageProps) {
     const { content, metadata } = post;
 
     return (
-      <div className="min-h-screen bg-white dark:bg-black">
+      <div className="min-h-screen bg-cream dark:bg-brown">
         <Header />
-        <main className="container mx-auto max-w-3xl px-4 py-12">
-          <article className="prose prose-gray dark:prose-invert max-w-none">
-            <div className="mb-8 border-b border-gray-200 pb-8 dark:border-gray-800">
-              <h1 className="mb-4 text-4xl font-bold tracking-tight text-gray-900 dark:text-white">
+        <main className="container mx-auto max-w-3xl px-4 py-10 md:py-14">
+          {/* Top runner */}
+          <div className="flex items-center justify-between text-[0.625rem] md:text-xs font-bold uppercase tracking-[0.18em] text-taupe">
+            <span>Field Notes &middot; Chenliang Tian</span>
+            <time className="hidden sm:inline" dateTime={metadata.date}>
+              {format(parseISO(metadata.date), 'MMMM d, yyyy')}
+            </time>
+          </div>
+          <hr className="mt-3 mb-10 border-0 border-t border-foreground/15" />
+
+          <article className="prose prose-neutral dark:prose-invert max-w-none prose-headings:font-display prose-headings:font-normal prose-headings:tracking-tight prose-a:text-terracotta prose-a:decoration-terracotta/40 hover:prose-a:decoration-terracotta">
+            <header className="mb-10 not-prose">
+              {metadata.tags && metadata.tags.length > 0 && (
+                <p className="mb-4 text-[0.6875rem] font-bold uppercase tracking-[0.22em] text-terracotta">
+                  {metadata.tags.join(' · ')}
+                </p>
+              )}
+              <h1 className="font-display text-4xl md:text-5xl lg:text-6xl leading-[1.05] tracking-tight text-foreground">
                 {metadata.title}
               </h1>
-              <div className="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
+              <p className="mt-4 italic text-base text-taupe">
                 <time dateTime={metadata.date}>
                   {format(parseISO(metadata.date), 'MMMM d, yyyy')}
                 </time>
-                {metadata.tags && (
-                  <div className="flex gap-2">
-                    {metadata.tags.map((tag: string) => (
-                      <span key={tag} className="rounded-full bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-600 dark:bg-gray-800 dark:text-gray-300">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </div>
+              </p>
+            </header>
             <MDXRemote source={content} components={MDXComponents} />
           </article>
         </main>
