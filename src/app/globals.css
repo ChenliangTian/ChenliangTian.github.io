@@ -110,3 +110,17 @@ body {
   text-transform: uppercase;
   color: var(--color-taupe);
 }
+
+/* KaTeX — block (display) equations: room to breathe, scroll if too wide on mobile */
+.katex-display {
+  margin: 1.75rem 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.25rem 0;
+}
+
+/* Math inherits ink color and sits comfortably with the body type */
+.katex {
+  color: var(--foreground);
+  font-size: 1.05em;
+}

@@ -99,4 +99,30 @@ export const MDXComponents = {
       <a className={cls} target="_blank" rel="noreferrer" href={href} {...props} />
     );
   },
+  table: ({ className, ...props }: React.HTMLAttributes<HTMLTableElement>) => (
+    <div className="my-8 -mx-4 overflow-x-auto px-4">
+      <table
+        className={cn("w-full border-collapse text-left align-top", className)}
+        {...props}
+      />
+    </div>
+  ),
+  thead: ({ className, ...props }: React.HTMLAttributes<HTMLTableSectionElement>) => (
+    <thead className={cn("border-b-2 border-foreground/20", className)} {...props} />
+  ),
+  th: ({ className, ...props }: React.HTMLAttributes<HTMLTableCellElement>) => (
+    <th
+      className={cn(
+        "py-3 pr-6 text-[0.6875rem] font-bold uppercase tracking-[0.18em] text-taupe align-bottom",
+        className
+      )}
+      {...props}
+    />
+  ),
+  tr: ({ className, ...props }: React.HTMLAttributes<HTMLTableRowElement>) => (
+    <tr className={cn("border-b border-foreground/10", className)} {...props} />
+  ),
+  td: ({ className, ...props }: React.HTMLAttributes<HTMLTableCellElement>) => (
+    <td className={cn("py-3 pr-6 align-top text-foreground/85", className)} {...props} />
+  ),
 };

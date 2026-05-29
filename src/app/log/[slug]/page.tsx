@@ -4,6 +4,16 @@ import { MDXRemote } from 'next-mdx-remote/rsc';
 import { MDXComponents } from '@/components/MDXComponents';
 import { format, parseISO } from 'date-fns';
 import { notFound } from 'next/navigation';
+import remarkGfm from 'remark-gfm';
+import remarkMath from 'remark-math';
+import rehypeKatex from 'rehype-katex';
+
+const mdxOptions = {
+  mdxOptions: {
+    remarkPlugins: [remarkGfm, remarkMath],
+    rehypePlugins: [rehypeKatex],
+  },
+};
 
 interface LogPageProps {
   params: {
@@ -52,8 +62,8 @@ export default async function LogPage({ params }: LogPageProps) {
           </div>
           <hr className="mt-3 mb-10 border-0 border-t border-foreground/15" />
 
-          <article className="prose prose-neutral dark:prose-invert max-w-none prose-headings:font-display prose-headings:font-normal prose-headings:tracking-tight prose-a:text-terracotta prose-a:decoration-terracotta/40 hover:prose-a:decoration-terracotta">
-            <header className="mb-10 not-prose">
+          <article className="text-base md:text-lg leading-relaxed text-foreground/85">
+            <header className="mb-10">
               {metadata.tags && metadata.tags.length > 0 && (
                 <p className="mb-4 text-[0.6875rem] font-bold uppercase tracking-[0.22em] text-terracotta">
                   {metadata.tags.join(' · ')}
@@ -68,7 +78,7 @@ export default async function LogPage({ params }: LogPageProps) {
                 </time>
               </p>
             </header>
-            <MDXRemote source={content} components={MDXComponents} />
+            <MDXRemote source={content} components={MDXComponents} options={mdxOptions} />
           </article>
         </main>
       </div>
