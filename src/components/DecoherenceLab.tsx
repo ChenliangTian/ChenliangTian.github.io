@@ -252,25 +252,52 @@ export function DecoherenceLab() {
       ctx.stroke();
     }
 
-    // resultant (bold) — length = C(t), angle = uniform
-    const rx = cx + R * C * Math.cos(uniform);
-    const ry = cy - R * C * Math.sin(uniform);
-    ctx.strokeStyle = palette.accent;
-    ctx.lineWidth = 3;
-    ctx.beginPath();
-    ctx.moveTo(cx, cy);
-    ctx.lineTo(rx, ry);
-    ctx.stroke();
-    // arrowhead
-    const ang = Math.atan2(ry - cy, rx - cx);
-    const ah = 8;
-    ctx.beginPath();
-    ctx.moveTo(rx, ry);
-    ctx.lineTo(rx - ah * Math.cos(ang - 0.4), ry - ah * Math.sin(ang - 0.4));
-    ctx.lineTo(rx - ah * Math.cos(ang + 0.4), ry - ah * Math.sin(ang + 0.4));
-    ctx.closePath();
+    // resultant (bold) — length = C(t), angle = uniform.
+    // canvas y is flipped, so the y-component of the direction uses -sin.
+    const len = R * C;
+    const dirX = Math.cos(uniform);
+    const dirY = -Math.sin(uniform);
+    const tipX = cx + len * dirX;
+    const tipY = cy + len * dirY;
+
     ctx.fillStyle = palette.accent;
-    ctx.fill();
+    ctx.strokeStyle = palette.accent;
+    ctx.lineJoin = "round";
+    ctx.lineCap = "round";
+
+    if (len < 9) {
+      // Coherence ~0: the average vector has collapsed — show a dot, not a stub.
+      ctx.beginPath();
+      ctx.arc(cx, cy, 4, 0, 2 * Math.PI);
+      ctx.fill();
+    } else {
+      const head = Math.min(15, Math.max(9, len * 0.42)); // arrowhead length
+      const hw = head * 0.6; // half-width of the head
+      const baseX = tipX - head * dirX;
+      const baseY = tipY - head * dirY;
+      const perpX = -dirY;
+      const perpY = dirX;
+
+      // shaft (stops at the head base so it doesn't poke through the tip)
+      ctx.lineWidth = 3.5;
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.lineTo(baseX, baseY);
+      ctx.stroke();
+
+      // filled arrowhead
+      ctx.beginPath();
+      ctx.moveTo(tipX, tipY);
+      ctx.lineTo(baseX + perpX * hw, baseY + perpY * hw);
+      ctx.lineTo(baseX - perpX * hw, baseY - perpY * hw);
+      ctx.closePath();
+      ctx.fill();
+
+      // origin dot
+      ctx.beginPath();
+      ctx.arc(cx, cy, 2.5, 0, 2 * Math.PI);
+      ctx.fill();
+    }
   }, [width, palette, phases, C, uniform, N]);
 
   useEffect(() => {
