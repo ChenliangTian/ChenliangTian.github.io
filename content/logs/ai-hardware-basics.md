@@ -1,7 +1,7 @@
 ---
 title: "AI Hardware & Model Fundamentals"
 date: "2025-12-17"
-tags: ["AI", "Hardware", "LLM", "Deep Learning"]
+tags: ["AI", "Hardware"]
 description: "A comprehensive overview of AI chips, model lifecycle, frameworks, and decoding parameters."
 ---
 

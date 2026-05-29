@@ -1,6 +1,7 @@
 import { getAllPosts } from '@/lib/mdx';
 import { Header } from '@/components/Header';
 import { LogSearch } from '@/components/LogSearch';
+import { KnowledgeMap } from '@/components/KnowledgeMap';
 
 export default function LogsPage() {
   const logs = getAllPosts('logs');
@@ -25,7 +26,16 @@ export default function LogsPage() {
           </h1>
         </header>
 
-        <LogSearch initialLogs={logs} />
+        {/* Knowledge Map — how the notes connect */}
+        <KnowledgeMap posts={logs} />
+
+        {/* Full searchable archive */}
+        <div className="mt-20 md:mt-28">
+          <p className="mb-8 text-xs md:text-sm font-bold uppercase tracking-[0.22em] text-terracotta">
+            All Entries
+          </p>
+          <LogSearch initialLogs={logs} />
+        </div>
       </main>
     </div>
   );

@@ -1,7 +1,7 @@
 ---
 title: "Exploring Quantum Entanglement"
 date: "2023-10-27"
-tags: ["Quantum", "Physics", "Learning"]
+tags: ["Quantum", "Foundations"]
 description: "A deep dive into the spooky action at a distance."
 ---
 

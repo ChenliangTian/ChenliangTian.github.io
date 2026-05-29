@@ -1,7 +1,7 @@
 ---
 title: "Quantum States & Density Matrices"
 date: "2026-05-29"
-tags: ["Quantum", "Quantum Information", "Density Matrices", "Learning"]
+tags: ["Quantum", "Foundations"]
 description: "The mathematical toolkit for representing pure and mixed quantum states — state vectors, density matrices, and why coherence lives in the off-diagonal terms."
 ---
 
