@@ -148,7 +148,7 @@ export function DecoherenceLab() {
     const cv = waveRef.current;
     if (!cv || width === 0) return;
     const dpr = window.devicePixelRatio || 1;
-    const cssW = width;
+    const cssW = cv.clientWidth || width; // the canvas's OWN displayed width (one column)
     const cssH = 260;
     cv.width = Math.round(cssW * dpr);
     cv.height = Math.round(cssH * dpr);
@@ -213,7 +213,7 @@ export function DecoherenceLab() {
     const cv = phasorRef.current;
     if (!cv || width === 0) return;
     const dpr = window.devicePixelRatio || 1;
-    const cssW = width;
+    const cssW = cv.clientWidth || width; // the canvas's OWN displayed width (one column)
     const cssH = 260;
     cv.width = Math.round(cssW * dpr);
     cv.height = Math.round(cssH * dpr);
