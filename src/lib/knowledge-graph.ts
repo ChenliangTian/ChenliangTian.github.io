@@ -157,11 +157,19 @@ export const nodes: GraphNode[] = [
   },
   {
     id: "c:dephasing",
-    label: "Pure Dephasing (T₂)",
+    label: "Dephasing (T₂)",
     type: "concept",
     domain: "Quantum",
     blurb:
-      "Decoherence that suppresses coherences while leaving populations fixed: ρ₀₁(t) = ρ₀₁(0)·e^(−t/T₂).",
+      "Phase information lost: coherences decay while populations stay fixed — ρ₀₁(t) = ρ₀₁(0)·e^(−t/T₂). Lands on the maximally mixed state.",
+  },
+  {
+    id: "c:relaxation",
+    label: "Relaxation (T₁)",
+    type: "concept",
+    domain: "Quantum",
+    blurb:
+      "Population/energy lost: the excited state decays toward the ground state (amplitude damping), moving the diagonal — ρ₁₁(t) = ρ₁₁(0)·e^(−t/T₁). Constrains T₂ ≤ 2T₁.",
   },
 
   // ── Concepts: AI ───────────────────────────────────────────────────────────
@@ -219,6 +227,7 @@ export const links: GraphLink[] = [
   { source: "log:entanglement", target: "c:entanglement", kind: "covers" },
   { source: "log:decoherence", target: "c:decoherence", kind: "covers" },
   { source: "log:decoherence", target: "c:dephasing", kind: "covers" },
+  { source: "log:decoherence", target: "c:relaxation", kind: "covers" },
   { source: "log:ai-hardware", target: "c:ai-chips", kind: "covers" },
   { source: "log:ai-hardware", target: "c:model-lifecycle", kind: "covers" },
   { source: "log:ai-hardware", target: "c:frameworks", kind: "covers" },
@@ -236,6 +245,8 @@ export const links: GraphLink[] = [
   // Decoherence builds on coherence and acts on the density matrix
   { source: "c:coherence", target: "c:decoherence", kind: "builds-on" },
   { source: "c:decoherence", target: "c:dephasing", kind: "relates" },
+  { source: "c:decoherence", target: "c:relaxation", kind: "relates" },
+  { source: "c:relaxation", target: "c:dephasing", kind: "relates" },
   { source: "c:dephasing", target: "c:density-matrix", kind: "relates" },
 
   { source: "c:ai-chips", target: "c:llms", kind: "relates" },
