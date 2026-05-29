@@ -1,7 +1,10 @@
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
+import { DecoherenceLab } from '@/components/DecoherenceLab';
 
 export const MDXComponents = {
+  // Interactive embeds (use as <DecoherenceLab /> inside a .md post)
+  DecoherenceLab,
   h1: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h1
       className={cn(

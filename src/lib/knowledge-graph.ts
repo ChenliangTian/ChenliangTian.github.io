@@ -74,6 +74,15 @@ export const nodes: GraphNode[] = [
     blurb: "Bell states and the correlations that no classical mixture can reproduce.",
   },
   {
+    id: "log:decoherence",
+    label: "Decoherence",
+    type: "log",
+    domain: "Quantum",
+    slug: "decoherence",
+    blurb:
+      "How a coherent state loses its phase relationship — pure dephasing and the decay of the off-diagonal terms.",
+  },
+  {
     id: "log:ai-hardware",
     label: "AI Hardware & Model Fundamentals",
     type: "log",
@@ -138,6 +147,22 @@ export const nodes: GraphNode[] = [
     blurb:
       "Correlations between subsystems that no product state or classical mixture can reproduce.",
   },
+  {
+    id: "c:decoherence",
+    label: "Decoherence",
+    type: "concept",
+    domain: "Quantum",
+    blurb:
+      "Loss of a stable phase relationship across an ensemble; the off-diagonal terms of ρ decay and the state drifts toward a classical mixture.",
+  },
+  {
+    id: "c:dephasing",
+    label: "Pure Dephasing (T₂)",
+    type: "concept",
+    domain: "Quantum",
+    blurb:
+      "Decoherence that suppresses coherences while leaving populations fixed: ρ₀₁(t) = ρ₀₁(0)·e^(−t/T₂).",
+  },
 
   // ── Concepts: AI ───────────────────────────────────────────────────────────
   {
@@ -181,6 +206,7 @@ export const links: GraphLink[] = [
   // Domain → logs
   { source: "domain:quantum", target: "log:density-matrices", kind: "contains" },
   { source: "domain:quantum", target: "log:entanglement", kind: "contains" },
+  { source: "domain:quantum", target: "log:decoherence", kind: "contains" },
   { source: "domain:ai", target: "log:ai-hardware", kind: "contains" },
 
   // Log → concepts (covers)
@@ -191,6 +217,8 @@ export const links: GraphLink[] = [
   { source: "log:density-matrices", target: "c:coherence", kind: "covers" },
   { source: "log:density-matrices", target: "c:eigendecomposition", kind: "covers" },
   { source: "log:entanglement", target: "c:entanglement", kind: "covers" },
+  { source: "log:decoherence", target: "c:decoherence", kind: "covers" },
+  { source: "log:decoherence", target: "c:dephasing", kind: "covers" },
   { source: "log:ai-hardware", target: "c:ai-chips", kind: "covers" },
   { source: "log:ai-hardware", target: "c:model-lifecycle", kind: "covers" },
   { source: "log:ai-hardware", target: "c:frameworks", kind: "covers" },
@@ -205,6 +233,10 @@ export const links: GraphLink[] = [
   { source: "c:pure-vs-mixed", target: "c:coherence", kind: "relates" },
   { source: "c:density-matrix", target: "c:eigendecomposition", kind: "builds-on" },
   { source: "c:density-matrix", target: "c:entanglement", kind: "relates" },
+  // Decoherence builds on coherence and acts on the density matrix
+  { source: "c:coherence", target: "c:decoherence", kind: "builds-on" },
+  { source: "c:decoherence", target: "c:dephasing", kind: "relates" },
+  { source: "c:dephasing", target: "c:density-matrix", kind: "relates" },
 
   { source: "c:ai-chips", target: "c:llms", kind: "relates" },
   { source: "c:model-lifecycle", target: "c:frameworks", kind: "relates" },
