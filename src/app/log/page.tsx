@@ -1,7 +1,7 @@
 import { getAllPosts } from '@/lib/mdx';
 import { Header } from '@/components/Header';
 import { LogSearch } from '@/components/LogSearch';
-import { KnowledgeMap } from '@/components/KnowledgeMap';
+import { KnowledgeGraph } from '@/components/KnowledgeGraph';
 
 export default function LogsPage() {
   const logs = getAllPosts('logs');
@@ -26,8 +26,25 @@ export default function LogsPage() {
           </h1>
         </header>
 
-        {/* Knowledge Map — how the notes connect */}
-        <KnowledgeMap posts={logs} />
+        {/* Knowledge Map — interactive 3D graph of how the notes connect */}
+        <section aria-labelledby="knowledge-map-heading">
+          <header className="mb-8">
+            <p className="mb-4 text-xs md:text-sm font-bold uppercase tracking-[0.22em] text-terracotta">
+              How the Notes Connect
+            </p>
+            <h2
+              id="knowledge-map-heading"
+              className="font-display text-4xl md:text-5xl lg:text-6xl leading-[0.95] tracking-tight text-foreground"
+            >
+              Knowledge Map.
+            </h2>
+            <p className="mt-4 font-display italic text-lg md:text-xl text-foreground/70 max-w-2xl leading-snug">
+              A network of the ideas behind these notes — domains, entries, and the knowledge
+              points that connect them. Rotate it, zoom in, and click any node.
+            </p>
+          </header>
+          <KnowledgeGraph />
+        </section>
 
         {/* Full searchable archive */}
         <div className="mt-20 md:mt-28">
