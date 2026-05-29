@@ -338,8 +338,9 @@ export function DecoherenceLab() {
           <canvas ref={phasorRef} className="w-full" style={{ height: 260 }} />
           <p className="mt-2 text-xs text-taupe leading-snug">
             Each thin arrow is one copy&rsquo;s phase. The bold arrow is their average —{" "}
-            <span className="font-semibold text-foreground">
-              |⟨e<sup>iφ</sup>⟩| = {C.toFixed(3)}
+            <span className="font-semibold text-foreground whitespace-nowrap">
+              |⟨<span className="italic">e</span>
+              <sup className="text-[0.85em]">iφ</sup>⟩| = {C.toFixed(3)}
             </span>{" "}
             (remaining coherence).
           </p>
@@ -361,8 +362,13 @@ export function DecoherenceLab() {
           </div>
           <p className="mt-3 text-xs text-taupe leading-relaxed">
             Diagonal fixed at ½. Off-diagonal{" "}
-            <span className="text-terracotta font-semibold">ρ₀₁ = ½·e^(−t/T₂)</span> ={" "}
-            {fmt(rho01)}.
+            <span className="text-terracotta font-semibold whitespace-nowrap">
+              ρ₀₁ = ½&nbsp;<span className="italic">e</span>
+              <sup className="text-[0.85em]">
+                −<span className="italic">t</span>/<span className="italic">T</span>₂
+              </sup>
+            </span>{" "}
+            = {fmt(rho01)}.
             {C < 0.05 && (
               <span className="block mt-1 font-bold uppercase tracking-[0.14em] text-[0.625rem] text-terracotta">
                 → Classical mixture limit
