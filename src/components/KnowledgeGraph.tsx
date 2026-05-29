@@ -99,6 +99,9 @@ export function KnowledgeGraph() {
       sprite.textHeight = sizeFor(node);
       sprite.fontFace = "Inter, Avenir Next, sans-serif";
       sprite.fontWeight = node.type === "concept" ? "400" : "700";
+      // Breathing room inside the text canvas — without it three-spritetext
+      // clips the tops of glyphs (E, B, D, etc. lose their crowns).
+      sprite.padding = 4;
       // Don't let labels punch holes in things behind them.
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const mat = (sprite as any).material;
